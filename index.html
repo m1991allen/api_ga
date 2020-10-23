@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>很多圖</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+    crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/44e5d9f0d5.js" crossorigin="anonymous"></script>
+  <style>
+    body {
+      background-color: #000;
+
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    span,
+    div {
+      font-family: 'Microsoft JhengHei';
+    }
+
+    .layout {
+      margin: auto;
+    }
+
+    .layout .c-layout {
+      width: 60%;
+      margin: 10px
+    }
+
+    .layout .g-layout {
+      width: 40%;
+      margin: 10px
+    }
+
+    .embed-container .embed-header .embed-title {
+      color: white !important;
+    }
+
+    .embed-container {
+      background-color: #484848 !important;
+    }
+
+    .screensaver .image {
+      display: none !important;
+    }
+
+    #result_ga {
+      color: white;
+
+    }
+
+    .act-users::before {
+      content: "網站上有 ";
+      font-size: 2rem;
+      color: white !important;
+    }
+
+    .act-users::after {
+      content: " 個人很活躍";
+      font-size: 2rem;
+      color: white !important;
+    }
+
+    .act-users {
+      text-align: center;
+      font-size: 3rem;
+      color: #ffd5d5;
+    }
+
+    .page-title {
+      font-size: 1.4rem;
+    }
+
+    .page-title #page_content {
+      height: 800px;
+      overflow: scroll;
+    }
+
+    .page-title .c2,
+    .page-title .c3 {
+      text-align: center !important;
+      font-size: 1rem !important;
+    }
+
+    .page-title .row div {
+      border-bottom: 1px solid rgb(213, 213, 213);
+      padding: 10px;
+      background: #2f2f2f;
+      height: 100px;
+      white-space: nowrap;
+    }
+
+    .title-style {
+      height: 55px !important;
+      color: #ffd5d5;
+      font-size: 17px;
+      letter-spacing: -2px;
+    }
+
+    .title-style:nth-child(1) {
+      letter-spacing: 0px;
+
+    }
+
+    .device-users {
+      width: 100%;
+    }
+
+    .device-users .chart-device {
+      display: flex;
+      width: 100%;
+      margin-left: 30px;
+    }
+
+    .device-users .chart-device span {
+      height: 30px;
+      border-radius: 10px;
+      padding: 0px 10px;
+      margin-right: 20px;
+      margin-bottom: 20px;
+      display: inline-block;
+      font-size: 20px;
+    }
+
+    #block1 {
+      background-color: #58a55c;
+    }
+
+    #block1:after {
+      content: " 手機";
+    }
+
+    #block2 {
+      background-color: #d85140;
+    }
+
+    #block2:after {
+      content: " 桌電";
+    }
+
+    #block3 {
+      background-color: #5385ed;
+    }
+
+    #block3:after {
+      content: " 平板";
+    }
+
+    #d1 {
+      background-color: #58a55c;
+    }
+
+    #d2 {
+      background-color: #d85140;
+    }
+
+    #d3 {
+      background-color: #5385ed;
+    }
+
+    .device-users .de-users-style {
+      width: 100%;
+      display: flex;
+      list-style: none;
+      margin-left: -10px;
+    }
+
+    .device-users .de-users-style li {
+      text-align: center;
+      height: 30px;
+      font-size: 22px;
+    }
+  </style>
+
+
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script>
+    /**
+     * Sample JavaScript code for analytics.data.realtime.get
+     * See instructions for running APIs Explorer code samples locally:
+     * https://developers.google.com/explorer-help/guides/code_samples#javascript
+     */
+
+    function authenticate() {
+      return gapi.auth2.getAuthInstance()
+        .signIn({ scope: "https://www.googleapis.com/auth/analytics https://www.googleapis.com/auth/analytics.readonly" })
+        .then(function () { console.log("Sign-in successful"); },
+          function (err) { console.error("Error signing in", err); });
+    }
+    function loadClient() {
+      //apiKEY apiKEY apiKEY
+      gapi.client.setApiKey("AIzaSyAMZOyeKiOfCnEHiHIsEN6nACvhnebwDhI");
+      return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/analytics/v3/rest")
+        .then(function () { console.log("GAPI client loaded for API"); },
+          function (err) { console.error("Error loading GAPI client for API", err); });
+    }
+
+    // Make sure the client is loaded and sign -in is complete before calling this method.
+
+    // 頁面活躍度
+    var obj1 = {
+      "ids": "ga:153085827",
+      "metrics": "rt:activeUsers",
+      "dimensions": "rt:pageTitle,rt:medium,rt:deviceCategory",
+      "max-results": 50,
+      "sort": "-rt:activeUsers"
+    }
+    // 裝置分類
+    var obj2 = {
+      "ids": "ga:153085827",
+      "metrics": "rt:activeUsers",
+      "dimensions": "rt:deviceCategory",
+      "sort": "-rt:activeUsers"
+    }
+    function execute() {
+      // 自動重整
+      setInterval(function execute() {
+        return gapi.client.analytics.data.realtime.get(obj1)
+          .then(function (obj1) {
+            // Handle the results here (obj1.result has the parsed body).
+
+            (function () {
+              return gapi.client.analytics.data.realtime.get(obj2)
+                .then(function (obj2) {
+                  let pt1 = parseInt(obj2.result.rows[0][1] / obj1.result.totalsForAllResults["rt:activeUsers"] * 100);
+                  let pt2 = parseInt(obj2.result.rows[1][1] / obj1.result.totalsForAllResults["rt:activeUsers"] * 100);
+                  let pt3 = parseInt(obj2.result.rows[2][1] / obj1.result.totalsForAllResults["rt:activeUsers"] * 100);
+                  $('.device-users ul #d1').html(pt1 + ' ％');
+                  $('.device-users ul #d2').html(pt2 + ' ％');
+                  // $('.device-users ul #d3').html(pt3 + ' ％');
+                  $('#d1').css('width', pt1 + '%');
+                  $('#d2').css('width', pt2 + '%');
+                  $('#d3').css('width', pt3 + '%');
+                }, function (err) { console.error("Execute error", err); });
+            })();
+
+
+            $('.act-users').html(obj1.result.totalsForAllResults["rt:activeUsers"]);
+            $('.page-title #page_content').html('');
+            var realtime_template = `
+              <div class="col-10 c1">{{title}}</div>
+              <div class="col-1 c2">{{medium}}</div>
+              <div class="col-1 c3">{{device}}</div>
+              `
+
+            for (var i = 0; i < 20; i++) {
+              var realtime_html = realtime_template.replace('{{title}}', obj1.result.rows[i][0])
+                .replace('{{medium}}', obj1.result.rows[i][1])
+                .replace('{{device}}', obj1.result.rows[i][3])
+                ;
+              $('.page-title #page_content').append(realtime_html);
+            }
+          }, function (err) { console.error("Execute error", err); });
+      }, 60000);
+
+      return gapi.client.analytics.data.realtime.get(obj1)
+        .then(function (obj1) {
+          // Handle the results here (obj1.result has the parsed body).
+
+          (function () {
+            return gapi.client.analytics.data.realtime.get(obj2)
+              .then(function (obj2) {
+                let pt1 = parseInt(obj2.result.rows[0][1] / obj1.result.totalsForAllResults["rt:activeUsers"] * 100);
+                let pt2 = parseInt(obj2.result.rows[1][1] / obj1.result.totalsForAllResults["rt:activeUsers"] * 100);
+                let pt3 = parseInt(obj2.result.rows[2][1] / obj1.result.totalsForAllResults["rt:activeUsers"] * 100);
+                $('.device-users ul #d1').html(pt1 + ' ％');
+                $('.device-users ul #d2').html(pt2 + ' ％');
+                // $('.device-users ul #d3').html(pt3 + ' ％');
+                $('#d1').css('width', pt1 + '%');
+                $('#d2').css('width', pt2 + '%');
+                $('#d3').css('width', pt3 + '%');
+              }, function (err) { console.error("Execute error", err); });
+          })();
+
+
+          $('.act-users').html(obj1.result.totalsForAllResults["rt:activeUsers"]);
+          $('.page-title #page_content').html('');
+          var realtime_template = `
+                    <div class="col-10 c1">{{title}}</div>
+                    <div class="col-1 c2">{{medium}}</div>
+                    <div class="col-1 c3">{{device}}</div>
+                    `
+
+          for (var i = 0; i < 20; i++) {
+            var realtime_html = realtime_template.replace('{{title}}', obj1.result.rows[i][0])
+              .replace('{{medium}}', obj1.result.rows[i][1])
+              .replace('{{device}}', obj1.result.rows[i][3])
+              ;
+            $('.page-title #page_content').append(realtime_html);
+          }
+        }, function (err) { console.error("Execute error", err); });
+    };
+
+    gapi.load("client:auth2", function () {
+      gapi.auth2.init({ client_id: "234178802402-68tqnaf50p81pu0rfrt9ecoict6ama2r.apps.googleusercontent.com" });
+    });
+  </script>
+
+</head>
+
+<body>
+  <div class="row layout">
+    <section class="col-lg-5 col-md-12">
+      <div id="pre_btn">
+        <div class="row" id="result_ga">
+          <div class="col-12 act-users"></div>
+          <div class="device-users">
+            <div class="chart-device">
+              <span id="block1"><i class="fas fa-mobile-alt"></i></span>
+              <span id="block2"><i class="fas fa-desktop"></i></span>
+              <span id="block3"><i class="fas fa-tablet-alt"></i></span>
+            </div>
+            <ul class="de-users-style">
+              <li id="d1"></li>
+              <li id="d2"></li>
+              <li id="d3"></li>
+            </ul>
+          </div>
+          <div class="col-12 page-title">
+            <div class="row">
+              <div class="col-10 title-style">頁面標題</div>
+              <div class="col-1 title-style">媒介</div>
+              <div class="col-1 title-style">活躍</div>
+            </div>
+            <div class="row" id="page_content"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="col-lg-5 col-md-12">
+      <iframe src="https://apps.crowdtangle.com/formosaftvnewsfb/boards/livemonitor/?tvAspectRatio=true"
+        style="border:0px #ffffff none;" name="gt" scrolling="yes" frameborder="1" marginheight="0px" marginwidth="0px"
+        height="1000px" width="100%" allowfullscreen></iframe>
+    </section>
+    <section class="col-lg-2 col-md-12">
+      <iframe src="https://trends.google.com/trends/hottrends/visualize?pn=p12&nrow=5&ncol=1"
+        style="border:0px #ffffff none; margin: 63px 0;" name="gt" scrolling="yes" frameborder="1" marginheight="0px"
+        marginwidth="0px" height="800px" width="100%" allowfullscreen></iframe>
+      <button onclick="authenticate().then(loadClient)">authorize and load</button>
+      <button onclick="execute()">execute</button>
+    </section>
+  </div>
+
+</body>
+
+</html>
